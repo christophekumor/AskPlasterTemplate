@@ -1,2 +1,2 @@
 # AskPlasterTemplate
-Simple Plaster Template based on quetsions
+Simple Plaster Template based on questions
