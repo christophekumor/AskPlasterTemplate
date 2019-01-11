@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="1.1" templateType="Project" 
+  xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+  <metadata>
+    <name>MyModuleTemplate</name>
+    <id>6e867128-6769-4291-b002-b46eaadf3282</id>
+    <version>1.0.0</version>
+    <title>MyModuleTemplate</title>
+    <description></description>
+    <author>Christophe Kumor</author>
+    <tags>PowerShell, Module, ModuleManifest</tags>
+  </metadata>
+  <parameters>
+    <parameter name='AuthorName' type='user-fullname' prompt='`r`nEnter your full name' />
+    <parameter name='AuthorEmail' type='user-email' prompt='`r`nEnter your email address' />
+    <parameter name='ModuleName' type='text' prompt='`r`nEnter the name of the module' />
+    <parameter name='ModuleDescription' type='text' prompt='`r`nEnter a description of the module (required for publishing to the PowerShell Gallery)' />
+    <parameter name='ModuleVersion' type='text' prompt='`r`nEnter the version number for the module' default='0.0.1' />
+    <!--
+    <parameter name='RootFolder' type = 'choice' prompt='Create module root folder?' default='0'>
+      <choice label='&amp;Yes' value='Yes' help='Create module root folder'/>
+      <choice label='&amp;No' value='No' help='root folder already exist'/>
+    </parameter>
+    -->
+    <parameter name='ModuleFolders' type = 'multichoice' prompt='`r`nPlease select folders to include' default='0,1,2'>
+      <choice label='&amp;Functions' value='functions' help='Folder containing functions'/>
+      <choice label='Functions\&amp;Public' value='Public' help='Folder containing public functions'/>
+      <choice label='Functions\Pr&amp;ivate' value='Private' help='Folder containing private functions that are not exposed to users'/>
+      <choice label='&amp;Classes' value='Classes' help='Folder containing classes'/>
+      <choice label='&amp;Resources' value='Resources' help='Folder containing any resources required by the module'/>
+    </parameter>
+
+    <parameter name='GitHub' type = 'choice' prompt='`r`nInclude GitHub Support?' default='0'>
+      <choice label='&amp;Yes' value='Yes' help='Issue/PR Templates, Code of Conduct and Contribution guide'/>
+      <choice label='&amp;No' value='No' help='Do not include files'/>
+    </parameter>
+
+    <parameter name='Git' type = 'choice' prompt='`r`nAdd a .gitignore file?' default='0'>
+      <choice label='&amp;Yes' value='Yes' help='Add a .gitignore file.'/>
+      <choice label='&amp;No' value='No' help='Does not add .gitignore'/>
+    </parameter>
+
+    <parameter name='License' type='choice' default='1' store='text' prompt='`r`nSelect a license for your module'>
+      <choice label='&amp;Apache' help='Add an Apache license file.' value='Apache'/>
+      <choice label='&amp;MIT' help='Add an MIT license file.' value='MIT'/>
+      <choice label='&amp;None' help='No license specified.' value='None'/>
+    </parameter>
+
+    <parameter name='Pester' type = 'choice' prompt='`r`nPester test support?' default='1'>
+      <choice label='&amp;Yes' value='Yes' help='Add Tests directory and a starter Pester Tests file.'/>
+      <choice label='&amp;No' value='No' help='No Pester support'/>
+    </parameter>
+
+    <parameter name='PSake' type = 'choice' prompt='`r`nPSake build script?' default='1'>
+      <choice label='&amp;Yes' value='Yes' help='Add a PSake build script that generates the module directory for publishing to the PSGallery.'/>
+      <choice label='&amp;No' value='No' help='No PSake support'/>
+    </parameter>
+
+    <parameter name='platyPS' type = 'choice' prompt='`r`nplatyPS help generation support?' default='1'>
+      <choice label='&amp;Yes' value='Yes' help='Add help build support using platyPS.'/>
+      <choice label='&amp;No' value='No' help='No platyPS support'/>
+    </parameter>
+
+    <parameter name='Editor' type='choice' default='1' store='text' prompt='`r`nWhich editor do you use'>
+      <choice label='&amp;ISE' help='Your editor is PowerShell ISE.' value='ISE'/>
+      <choice label='Visual Studio &amp;Code' help='Your editor is Visual Studio Code.' value='VSCode'/>
+      <choice label='&amp;None' help='No editor specified.' value='None'/>
+    </parameter>
+  </parameters>
+  <content>
+    <!--
+    <message condition='$PLASTER_PARAM_RootFolder -eq "Yes"'>Creating root module folder</message>
+    <file source='' destination='..\$PLASTER_PARAM_ModuleName' condition='$PLASTER_PARAM_RootFolder -eq "Yes"'/>
+    -->
+    <message>____________________________________</message>
+    <message>`r`n`tMagic in progress`r`n</message>
+    <message>____________________________________</message>
+    <message>`r`n-> Creating your code folders</message>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}' />
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\Functions' />
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\Functions\' condition='$PLASTER_PARAM_ModuleFolders -contains "functions"'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\Functions\Private\' condition='$PLASTER_PARAM_ModuleFolders -contains "Private"'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\Functions\Public\' condition='$PLASTER_PARAM_ModuleFolders -contains "Public"'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\Resources\' condition='$PLASTER_PARAM_ModuleFolders -contains "resources"'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\Classes\' condition='$PLASTER_PARAM_ModuleFolders -contains "classes"'/>
+
+    <message condition='$PLASTER_PARAM_Editor -eq "VSCode"'>`r`n-> Creating VSCode folder and files</message>
+    <file source='' destination='.vscode' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\settings.json' destination='.vscode\settings.json' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\launch.json' destination='.vscode\launch.json' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\PSScriptAnalyzerSettings.psd1' destination='.vscode\PSScriptAnalyzerSettings.psd1' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\tasks_pester.json' destination='.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "No") -and ($PLASTER_PARAM_Pester -eq "Yes")' />
+    <file source='vscode\tasks_psake.json' destination='.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "Yes") -and ($PLASTER_PARAM_Pester -eq "No")' />
+    <file source='vscode\tasks_psake_pester.json' destination='.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "Yes") -and ($PLASTER_PARAM_Pester -eq "Yes")' />
+
+    <message condition='$PLASTER_PARAM_Pester -eq "Yes"'>`r`n-> Creating Pester test folder</message>
+    <file source='' destination='tests' condition='$PLASTER_PARAM_Pester -eq "Yes"' />
+
+    <message condition='$PLASTER_PARAM_Pester -eq "Yes"'>`r`n-> Deploying Pester files</message>
+    <file source='pester\*.ps1' destination='tests\' condition='$PLASTER_PARAM_Pester -eq "Yes"'/>
+
+    <message condition='$PLASTER_PARAM_platyPS -eq "Yes"'>`r`n-> Deploying platyPS files</message>
+    <templateFile source='docs\en-US\about_Module.help.md' destination='docs\en-US\about_${PLASTER_PARAM_ModuleName}.help.md' condition='$PLASTER_PARAM_platyPS -eq "Yes"' />
+
+    <message condition='$PLASTER_PARAM_GitHub -eq "Yes"'>`r`n-> Creating GitHub folder and files</message>
+    <file source='' destination='.github' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='github\ISSUE_TEMPLATE\Bug_report.md' destination='.github\ISSUE_TEMPLATE\Bug_report.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='github\ISSUE_TEMPLATE\Feature_request.md' destination='.github\ISSUE_TEMPLATE\Feature_request.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='github\PULL_REQUEST_TEMPLATE.md' destination='.github\PULL_REQUEST_TEMPLATE.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <templateFile source='code-of-conduct.md' destination='' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <templateFile source='contributing.md' destination='' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+
+    <message condition='$PLASTER_PARAM_License -eq "Yes"'>`r`n-> Creating license file</message>
+    <templateFile source='licenses\Apache.md' destination='LICENSE.md' condition='$PLASTER_PARAM_License -eq "Apache"' encoding='UTF8-NoBOM'/>
+    <templateFile source='licenses\MIT.md' destination='LICENSE.md' condition='$PLASTER_PARAM_License -eq "MIT"'/>
+
+    <message>`r`n-> Deploying root directory files</message>
+    <templateFile source='CHANGELOG.md' destination=''/>
+    <file source='module.psm1' destination='$PLASTER_PARAM_ModuleName\${PLASTER_PARAM_ModuleName}.psm1'/>
+    <templateFile source='MODULE_README.md' destination='README.MD'/>
+    <file source='_gitignore' destination='.gitignore' condition='$PLASTER_PARAM_Git -eq "Yes"'/>
+
+    <message condition='$PLASTER_PARAM_PSake -eq "Yes"'>`r`n-> Deploying PSake files</message>
+    <file source='psake\build*.ps1' destination='' condition='$PLASTER_PARAM_PSake -eq "Yes"'/>
+
+    <message>`r`n-> Creating module manifest</message>
+    <newModuleManifest destination='$PLASTER_PARAM_ModuleName\${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='$PLASTER_PARAM_ModuleVersion' rootModule='$PLASTER_PARAM_ModuleName\${PLASTER_PARAM_ModuleName}.psm1' author='$PLASTER_PARAM_AuthorName' companyName='${PLASTER_PARAM_AuthorName}' description='$PLASTER_PARAM_ModuleDescription' encoding='UTF8-NoBOM'/>
+
+    <requireModule name='Pester' condition='$PLASTER_PARAM_Pester -eq "Yes"' minimumVersion='3.4.0' message='Without Pester, you will not be able to run the provided Pester test to validate your module manifest file.`nWithout version 3.4.0, VS Code will not display Pester warnings and errors in the Problems panel.'/>
+
+    <requireModule name='psake' condition='$PLASTER_PARAM_PSake -eq "Yes"' message='Without psake, you will not be able to run the provided build script to build and/or publish your module.'/>
+
+    <requireModule name='PSScriptAnalyzer' condition='$PLASTER_PARAM_Editor -eq "VSCode"' message="Without PSScriptAnalyzer, you will not be able to perform script analysis, or use the provided options to control script analysis."/>
+
+    <requireModule name='platyPS' condition='$PLASTER_PARAM_platyPS -eq "Yes"' minimumVersion="0.7.2" message="Without platyPS, you will not be able to generate PowerShell external help for your module using markdown."/>
+
+    <message>`r`n____________________________________</message>
+    <message nonewline='true'>`r`nYour new PowerShell module project $PLASTER_PARAM_ModuleName </message>
+    <message nonewline='true' condition='$PLASTER_PARAM_Git -eq "Yes"'>with Git version control </message>
+    <message>has been created.</message>
+
+    <message condition='$PLASTER_PARAM_PSake -eq "Yes"'>
+`r`nYou can build your project by executing the 'build' task.  Press Ctrl+P, then type 'task build'.
+You can publish your project to the PSGallery by pressing Ctrl+P, then type 'task publish'.
+
+    </message>
+
+    <message condition='$PLASTER_PARAM_Pester -eq "Yes"'>
+`r`nA Pester test has been created to validate the module's manifest file.  Add additional tests to the test directory.
+You can run the Pester tests in your project by executing the 'test' task.  Press Ctrl+P, then type 'task test'.
+
+    </message>
+    
+    <message condition='($PLASTER_PARAM_Options -eq "psake") -and ($PLASTER_PARAM_platyPS -eq "Yes")'>
+`r`nYou can generate help and additional documentation using platyPS by running the 'build help' task.  Press Ctrl+P,
+then type 'task build help'.  Add additional documentation written in platyPS markdown to the docs directory. You can
+update the help by running the 'build help' task again.
+
+    </message>
+  </content>
+</plasterManifest>
