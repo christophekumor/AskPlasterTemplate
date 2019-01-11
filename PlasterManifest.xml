@@ -86,42 +86,42 @@
 
     <message condition='$PLASTER_PARAM_Editor -eq "VSCode"'>`r`n-> Creating VSCode folder and files</message>
     <file source='' destination='.vscode' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
-    <file source='vscode\settings.json' destination='.vscode\settings.json' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
-    <file source='vscode\launch.json' destination='.vscode\launch.json' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
-    <file source='vscode\PSScriptAnalyzerSettings.psd1' destination='.vscode\PSScriptAnalyzerSettings.psd1' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
-    <file source='vscode\tasks_pester.json' destination='.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "No") -and ($PLASTER_PARAM_Pester -eq "Yes")' />
-    <file source='vscode\tasks_psake.json' destination='.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "Yes") -and ($PLASTER_PARAM_Pester -eq "No")' />
-    <file source='vscode\tasks_psake_pester.json' destination='.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "Yes") -and ($PLASTER_PARAM_Pester -eq "Yes")' />
+    <file source='vscode\settings.json' destination='${PLASTER_PARAM_ModuleName}\.vscode\settings.json' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\launch.json' destination='${PLASTER_PARAM_ModuleName}\.vscode\launch.json' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\PSScriptAnalyzerSettings.psd1' destination='${PLASTER_PARAM_ModuleName}\.vscode\PSScriptAnalyzerSettings.psd1' condition='$PLASTER_PARAM_Editor -eq "VSCode"' />
+    <file source='vscode\tasks_pester.json' destination='${PLASTER_PARAM_ModuleName}\.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "No") -and ($PLASTER_PARAM_Pester -eq "Yes")' />
+    <file source='vscode\tasks_psake.json' destination='${PLASTER_PARAM_ModuleName}\.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "Yes") -and ($PLASTER_PARAM_Pester -eq "No")' />
+    <file source='vscode\tasks_psake_pester.json' destination='${PLASTER_PARAM_ModuleName}\.vscode\tasks.json' condition='($PLASTER_PARAM_Editor -eq "VSCode") -and ($PLASTER_PARAM_PSake -eq "Yes") -and ($PLASTER_PARAM_Pester -eq "Yes")' />
 
     <message condition='$PLASTER_PARAM_Pester -eq "Yes"'>`r`n-> Creating Pester test folder</message>
-    <file source='' destination='tests' condition='$PLASTER_PARAM_Pester -eq "Yes"' />
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\tests' condition='$PLASTER_PARAM_Pester -eq "Yes"' />
 
     <message condition='$PLASTER_PARAM_Pester -eq "Yes"'>`r`n-> Deploying Pester files</message>
-    <file source='pester\*.ps1' destination='tests\' condition='$PLASTER_PARAM_Pester -eq "Yes"'/>
+    <file source='pester\*.ps1' destination='${PLASTER_PARAM_ModuleName}\tests\' condition='$PLASTER_PARAM_Pester -eq "Yes"'/>
 
     <message condition='$PLASTER_PARAM_platyPS -eq "Yes"'>`r`n-> Deploying platyPS files</message>
-    <templateFile source='docs\en-US\about_Module.help.md' destination='docs\en-US\about_${PLASTER_PARAM_ModuleName}.help.md' condition='$PLASTER_PARAM_platyPS -eq "Yes"' />
+    <templateFile source='docs\en-US\about_Module.help.md' destination='${PLASTER_PARAM_ModuleName}\docs\en-US\about_${PLASTER_PARAM_ModuleName}.help.md' condition='$PLASTER_PARAM_platyPS -eq "Yes"' />
 
     <message condition='$PLASTER_PARAM_GitHub -eq "Yes"'>`r`n-> Creating GitHub folder and files</message>
-    <file source='' destination='.github' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
-    <file source='github\ISSUE_TEMPLATE\Bug_report.md' destination='.github\ISSUE_TEMPLATE\Bug_report.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
-    <file source='github\ISSUE_TEMPLATE\Feature_request.md' destination='.github\ISSUE_TEMPLATE\Feature_request.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
-    <file source='github\PULL_REQUEST_TEMPLATE.md' destination='.github\PULL_REQUEST_TEMPLATE.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
-    <templateFile source='code-of-conduct.md' destination='' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
-    <templateFile source='contributing.md' destination='' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}\.github' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='github\ISSUE_TEMPLATE\Bug_report.md' destination='${PLASTER_PARAM_ModuleName}\.github\ISSUE_TEMPLATE\Bug_report.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='github\ISSUE_TEMPLATE\Feature_request.md' destination='${PLASTER_PARAM_ModuleName}\.github\ISSUE_TEMPLATE\Feature_request.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <file source='github\PULL_REQUEST_TEMPLATE.md' destination='${PLASTER_PARAM_ModuleName}\.github\PULL_REQUEST_TEMPLATE.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <templateFile source='code-of-conduct.md' destination='${PLASTER_PARAM_ModuleName}\.github\code-of-conduct.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
+    <templateFile source='contributing.md' destination='${PLASTER_PARAM_ModuleName}\.github\.github_contributing.md' condition='$PLASTER_PARAM_GitHub -eq "Yes"'/>
 
     <message condition='$PLASTER_PARAM_License -eq "Yes"'>`r`n-> Creating license file</message>
-    <templateFile source='licenses\Apache.md' destination='LICENSE.md' condition='$PLASTER_PARAM_License -eq "Apache"' encoding='UTF8-NoBOM'/>
-    <templateFile source='licenses\MIT.md' destination='LICENSE.md' condition='$PLASTER_PARAM_License -eq "MIT"'/>
+    <templateFile source='licenses\Apache.md' destination='${PLASTER_PARAM_ModuleName}\LICENSE.md' condition='$PLASTER_PARAM_License -eq "Apache"' encoding='UTF8-NoBOM'/>
+    <templateFile source='licenses\MIT.md' destination='${PLASTER_PARAM_ModuleName}\LICENSE.md' condition='$PLASTER_PARAM_License -eq "MIT"'/>
 
     <message>`r`n-> Deploying root directory files</message>
-    <templateFile source='CHANGELOG.md' destination=''/>
+    <templateFile source='CHANGELOG.md' destination='${PLASTER_PARAM_ModuleName}\CHANGELOG.md'/>
     <file source='module.psm1' destination='$PLASTER_PARAM_ModuleName\${PLASTER_PARAM_ModuleName}.psm1'/>
-    <templateFile source='MODULE_README.md' destination='README.MD'/>
-    <file source='_gitignore' destination='.gitignore' condition='$PLASTER_PARAM_Git -eq "Yes"'/>
+    <templateFile source='MODULE_README.md' destination='${PLASTER_PARAM_ModuleName}\README.MD'/>
+    <file source='_gitignore' destination='${PLASTER_PARAM_ModuleName}\.gitignore' condition='$PLASTER_PARAM_Git -eq "Yes"'/>
 
     <message condition='$PLASTER_PARAM_PSake -eq "Yes"'>`r`n-> Deploying PSake files</message>
-    <file source='psake\build*.ps1' destination='' condition='$PLASTER_PARAM_PSake -eq "Yes"'/>
+    <file source='psake\build*.ps1' destination='${PLASTER_PARAM_ModuleName}\psake\build*.ps1' condition='$PLASTER_PARAM_PSake -eq "Yes"'/>
 
     <message>`r`n-> Creating module manifest</message>
     <newModuleManifest destination='$PLASTER_PARAM_ModuleName\${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='$PLASTER_PARAM_ModuleVersion' rootModule='$PLASTER_PARAM_ModuleName\${PLASTER_PARAM_ModuleName}.psm1' author='$PLASTER_PARAM_AuthorName' companyName='${PLASTER_PARAM_AuthorName}' description='$PLASTER_PARAM_ModuleDescription' encoding='UTF8-NoBOM'/>
